@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore — StudyShare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a',950:'#172554' },
+                        surface: { 50:'#f8fafc',100:'#f1f5f9',200:'#e2e8f0',300:'#cbd5e1',400:'#94a3b8',500:'#64748b',600:'#475569',700:'#334155',800:'#1e293b',900:'#0f172a' }
+                    },
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body class="font-sans bg-surface-50 text-surface-800 antialiased">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-surface-200/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="explore.html" class="flex items-center gap-2.5 group">
+                    <div class="w-9 h-9 bg-gradient-to-br from-primary-600 to-primary-800 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/25">
+                        <i class="fas fa-graduation-cap text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-primary-700 to-primary-900 bg-clip-text text-transparent">StudyShare</span>
+                </a>
+
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-surface-400 text-sm"></i>
+                        <input type="text" id="global-search-input" placeholder="Search notes, papers, subjects..."
+                            class="w-full pl-10 pr-4 py-2.5 bg-surface-100 border border-surface-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all placeholder:text-surface-400">
+                        <div id="search-results-dropdown" class="hidden absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-surface-200 max-h-96 overflow-y-auto z-50"></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="explore.html" class="px-3 py-2 text-sm font-semibold text-primary-700 bg-primary-50 rounded-lg">
+                        <i class="fas fa-compass mr-1.5"></i>Explore
+                    </a>
+                    <div class="relative">
+                        <button id="user-avatar-btn" onclick="toggleUserDropdown()" class="flex items-center gap-2.5 p-1.5 pr-3 rounded-xl hover:bg-surface-100 transition-all">
+                            <div class="w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-lg flex items-center justify-center">
+                                <span id="user-avatar-initial" class="text-white text-sm font-bold">U</span>
+                            </div>
+                            <span id="user-display-name" class="text-sm font-medium text-surface-700 hidden sm:block">User</span>
+                            <i class="fas fa-chevron-down text-xs text-surface-400"></i>
+                        </button>
+                        <div id="user-dropdown" class="hidden absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-2xl border border-surface-200 py-2 z-50">
+                            <a href="profile.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-surface-600 hover:bg-surface-50 hover:text-primary-700 transition-all">
+                                <i class="fas fa-user w-4 text-center"></i>My Profile
+                            </a>
+                            <a href="profile.html#my-uploads" class="flex items-center gap-3 px-4 py-2.5 text-sm text-surface-600 hover:bg-surface-50 hover:text-primary-700 transition-all">
+                                <i class="fas fa-cloud-upload-alt w-4 text-center"></i>My Uploads
+                            </a>
+                            <hr class="my-2 border-surface-100">
+                            <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-all">
+                                <i class="fas fa-sign-out-alt w-4 text-center"></i>Log out
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Mobile menu -->
+                    <button class="md:hidden p-2 rounded-lg hover:bg-surface-100" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-surface-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-surface-100 px-4 py-4 space-y-2">
+            <div class="mb-3">
+                <div class="relative">
+                    <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-surface-400 text-sm"></i>
+                    <input type="text" id="mobile-search-input" placeholder="Search..."
+                        class="w-full pl-10 pr-4 py-2.5 bg-surface-100 border border-surface-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/30">
+                </div>
+            </div>
+            <a href="profile.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-surface-600 hover:bg-surface-50 font-medium">
+                <i class="fas fa-user"></i>Profile
+            </a>
+            <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 font-medium">
+                <i class="fas fa-sign-out-alt"></i>Log out
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="pt-24 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-surface-900">Explore Resources</h1>
+            <p class="text-surface-500 mt-1">Select your year and branch to find study materials</p>
+        </div>
+
+        <!-- Year & Branch Selector -->
+        <div class="bg-white rounded-2xl border border-surface-200 shadow-sm p-6 mb-8">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
+                <!-- Year Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-surface-700 mb-2">
+                        <i class="fas fa-calendar-alt mr-1.5 text-primary-500"></i>Year of Study
+                    </label>
+                    <select id="select-year" class="w-full px-4 py-3 bg-surface-50 border border-surface-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all appearance-none cursor-pointer">
+                        <option value="">Choose year...</option>
+                        <option value="FE">FE — First Year</option>
+                        <option value="SE">SE — Second Year</option>
+                        <option value="TE">TE — Third Year</option>
+                        <option value="BE">BE — Final Year</option>
+                    </select>
+                </div>
+
+                <!-- Branch Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-surface-700 mb-2">
+                        <i class="fas fa-code-branch mr-1.5 text-primary-500"></i>Branch
+                    </label>
+                    <select id="select-branch" class="w-full px-4 py-3 bg-surface-50 border border-surface-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all appearance-none cursor-pointer">
+                        <option value="">Choose branch...</option>
+                        <option value="Comp">Computer Engineering</option>
+                        <option value="AIML">AI & Machine Learning</option>
+                        <option value="DS">Data Science</option>
+                        <option value="EXTC">Electronics & Telecom</option>
+                        <option value="Civil">Civil Engineering</option>
+                        <option value="Mech">Mechanical Engineering</option>
+                    </select>
+                </div>
+
+                <!-- Browse Button -->
+                <div>
+                    <button id="browse-btn" onclick="renderSubjects()" class="w-full px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold text-sm rounded-xl hover:from-primary-700 hover:to-primary-800 shadow-lg shadow-primary-500/25 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+                        <i class="fas fa-search"></i>
+                        Browse Subjects
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick profile-based selection -->
+            <div id="quick-select" class="hidden mt-4 pt-4 border-t border-surface-100">
+                <button id="quick-my-subjects" class="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 text-primary-700 rounded-xl text-sm font-medium hover:bg-primary-100 transition-colors">
+                    <i class="fas fa-bolt text-xs"></i>
+                    <span>Load my subjects (<span id="quick-year">--</span> <span id="quick-branch">--</span>)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Selection Info Banner -->
+        <div id="selection-info" class="hidden mb-6">
+            <div class="flex items-center justify-between bg-primary-50 border border-primary-200 rounded-xl px-5 py-3">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-book-open text-primary-600"></i>
+                    <span class="text-sm font-medium text-primary-800">
+                        Showing subjects for <strong id="info-year">--</strong> — <strong id="info-branch">--</strong>
+                    </span>
+                </div>
+                <span id="subject-count" class="text-xs font-semibold text-primary-600 bg-white px-2.5 py-1 rounded-full border border-primary-200">0 subjects</span>
+            </div>
+        </div>
+
+        <!-- Subjects Grid -->
+        <div id="subjects-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <!-- Empty state -->
+            <div id="empty-state" class="col-span-full text-center py-20">
+                <div class="w-20 h-20 bg-surface-100 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-folder-open text-surface-400 text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-surface-700 mb-2">Select year and branch</h3>
+                <p class="text-surface-500 max-w-md mx-auto">Choose your year of study and branch above to see all available subjects and their study materials.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[150] space-y-3"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 z-[200] bg-white flex items-center justify-center">
+        <div class="text-center">
+            <div class="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+                <i class="fas fa-graduation-cap text-white text-lg"></i>
+            </div>
+            <p class="text-surface-500 text-sm font-medium">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/explore.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>

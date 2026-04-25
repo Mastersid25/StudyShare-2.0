@@ -1,0 +1,141 @@
+/* ==================== CUSTOM STYLES ==================== */
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 100px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Modal animation */
+@keyframes modalEnter {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.animate-modal-enter {
+    animation: modalEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Toast animation */
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes toastSlideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+.toast-enter {
+    animation: toastSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-exit {
+    animation: toastSlideOut 0.3s ease-in forwards;
+}
+
+/* Tab active indicator */
+.tab-active {
+    color: #2563eb;
+    border-bottom-color: #2563eb;
+}
+
+/* File card hover */
+.file-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+}
+
+/* Upload progress bar */
+.progress-bar {
+    transition: width 0.3s ease;
+}
+
+/* Skeleton loading */
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+    background-size: 2000px 100%;
+    animation: shimmer 2s infinite;
+    border-radius: 8px;
+}
+
+/* Select dropdown arrow */
+select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+}
+
+/* Upvote button animation */
+.upvote-btn.active {
+    color: #2563eb;
+    background-color: #eff6ff;
+}
+
+.upvote-btn.active i {
+    animation: upvotePop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes upvotePop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Focus ring consistent styling */
+.focus-ring:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Badge styles */
+.badge-fe { background-color: #dbeafe; color: #1e40af; }
+.badge-se { background-color: #dcfce7; color: #166534; }
+.badge-te { background-color: #fef3c7; color: #92400e; }
+.badge-be { background-color: #fce7f3; color: #9d174d; }
+
+/* Preview modal */
+.preview-overlay {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
